@@ -5,12 +5,17 @@
 })('qwery', this, function(){
     function qwery(selector){
         return [document.createElement('p'),
+                document.createElement('p'),
+                document.createElement('p'),
                 document.createElement('p')];
     };
     qwery.configure = function(){};
     qwery.uniq = function(list){
         return {};
         };
+    qwery.is = function(e1, t1) {
+        return "a";
+    };
     qwery.pseudos = {};
     return qwery;
 });
