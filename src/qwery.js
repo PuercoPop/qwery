@@ -10,22 +10,21 @@
     };
 })('qwery', this, function(){
     var qwery = function (selector, context){
-        var _qsa(selector) {
-            try {
-                return this.querySelectorAll(select);
-            } catch(e) {
-                return [];
-            }
-        }
+        var i;
+
         if (context instanceof NodeList) {
-            for( var i=0 ; i <= context.length; i++){
-                return context[i].querySelectorAll(selector);
+            // Necesito hacer un map y collect sobre el Array
+            var tmp_elem = document.createDocumentFragment()
+            for(i=0 ; i <= context.length; i++){
+                tmp_elem.appendChild(context[i]);
+                return qwery._qSA(selector, tmp_elem);
             };
         } else if (typeof(context) === "string") {
             return qwery(selector, qwery(context));
         } else {
-            return document.querySelectorAll(selector);
+            return qwery._qSA(selector, document);
         };
+
     };
     qwery.configure = function(){};
     qwery.uniq = function(list){
@@ -35,5 +34,15 @@
         return "a";
     };
     qwery.pseudos = {};
+
+    // private helpers
+    qwery._qSA = function (selector, elem) {
+        try {
+            return elem.querySelectorAll(selector);
+        } catch(e) {
+            return [];
+        };
+    };
+    
     return qwery;
 });
